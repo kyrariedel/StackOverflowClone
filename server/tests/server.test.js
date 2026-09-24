@@ -529,9 +529,9 @@ describe('POST /addAccount', () => {
 
   it('should add a new account', async () => {
     const mockAccount = {
-      username: "jeffrey123",
+      username: "kyra123",
       password: "123",
-      name: "Jeffrey Chen"
+      name: "Kyra Riedel"
     }
 
     Account.create.mockReturnValueOnce(mockAccount);
@@ -559,24 +559,28 @@ describe('GET /authenticateAccount', () => {
   it('should authenticate an account and return the username', async () => {
     // Mock Account.findOne method to return a mock account
     const mockAccount = {
-      username: 'jeffrey123',
+      username: 'kyra123',
       password: '123',
-      name: 'Jeffrey Chen',
+      name: 'Kyra Riedel',
     };
 
-    Account.findOne = jest.fn().mockImplementation(() => ({ populate: jest.fn().mockResolvedValueOnce(mockAccount) }));
+    Account.findOne = jest.fn().mockResolvedValueOnce(mockAccount);
   
     // Making the request
     const response = await supertest(server)
       .get('/account/authenticateAccount')
       .query({
-        username: 'jeffrey123',
+        username: 'kyra123',
         password: '123',
       });
   
     // Asserting the response
     expect(response.status).toBe(200);
-    expect(response.body).toEqual('jeffrey123');
+    expect(response.body).toEqual('kyra123');
+    expect(Account.findOne).toHaveBeenCalledWith({
+      username: 'kyra123',
+      password: '123',
+    });
   });
 })
 

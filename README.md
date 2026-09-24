@@ -26,7 +26,7 @@ npm start
 
 The client runs at http://localhost:3000 and calls http://localhost:8000.
 
-Seeded login (plaintext password stored by `server/init.js`): username `jeffrey123`, password `123`. Signup does not log the new account in.
+Seeded login (plaintext password stored by `server/init.js`): username `kyra123`, password `123`. Signup does not log the new account in.
 
 `server/destroy.js` drops the `fake_so` database on `localhost`.
 
@@ -67,7 +67,7 @@ Base URL `http://localhost:8000`. CORS allows `http://localhost:3000` with crede
 | POST | `/comment/addComment` | Create a comment on `qid`, or on `aid` when `aid` is set |
 | GET | `/tag/getTagsWithQuestionNumber` | Tag names with question counts |
 | POST | `/account/addAccount` | Create an account |
-| GET | `/account/authenticateAccount?username=&password=` | Look up a username |
+| GET | `/account/authenticateAccount?username=&password=` | Return the username when both username and password match |
 
 There are no answer-vote routes. `client/src/services/commentService.js` also calls `GET /comment/getQuestionById/:id`, which is not implemented. Account fields `role`, `votedQuestions`, and `votedAnswers` are on the schema and are not used by these routes.
 

@@ -22,7 +22,10 @@ const addAccount = async (req, res) => {
 const authenticateAccount = async (req, res) => {
     const content = req.query;
 
-    let account = await Account.findOne({username: content.username}, {password: content.password}).populate({path: "username"});
+    let account = await Account.findOne({
+        username: content.username,
+        password: content.password,
+    });
 
     if (account) {
         res.json(account.username);

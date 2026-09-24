@@ -25,7 +25,7 @@ const addComment = async (req, res) => {
             { _id: aid },
             { $push: { comments: { $each: [c._id], $position: 0 } } },
             { new: true }
-        ).popilate('comments')
+        );
     }
     res.json(c);
 };
