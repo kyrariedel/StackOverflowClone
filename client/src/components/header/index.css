@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 10%;
+    width: 100%;
+    background: #dddddd;
+}
+
+.login_btn_group {
+    display: block;
+    align-items: center;
+    justify-content: flex-right;
+    height: 10%;
+    width: 20%;
+    background: #dddddd;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.bluebtn {
+    background: #3090e2;
+    color: #ffffff;
+    border: #000000 1px solid;
+    font-size: 20px;
+    padding: 10px 10px 10px 10px;
+    margin-right: 5%;
+}

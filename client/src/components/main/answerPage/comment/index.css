@@ -1,0 +1,17 @@
+/* All the CSS related to answers Page*/
+.comment {
+    display: flex;
+    flex-direction: row;
+    border-bottom: #000000 0.5px dashed;
+    margin-top: 0;
+    margin-bottom: 0; 
+}
+
+.commentText {
+    width: 35%;
+    margin-left: 45%;
+}
+
+.comment_author {
+    color: blue;
+}

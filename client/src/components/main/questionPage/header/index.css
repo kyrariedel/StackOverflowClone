@@ -1,0 +1,17 @@
+.header_buffer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 10%;
+    width: 100%;
+    background: #dddddd;
+}
+
+.bluebtn_login {
+    background: #3090e2;
+    color: #ffffff;
+    border: #000000 1px solid;
+    font-size: 15px;
+    padding: 8px 8px 8px 8px;
+    margin-right: 0.8%;
+}

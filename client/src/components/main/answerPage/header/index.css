@@ -1,0 +1,27 @@
+.answer_question_title {
+    max-width: 60%;
+}
+
+.voting {
+    width: 30px;
+    height: 30px;
+    padding-left: 40px;
+ }
+ .upvote {
+    background: url("up-300x300.png");
+    width: 30px;
+    height: 30px;
+    border: none;
+ }
+ .downvote {
+    background: url("down-300x300.png");
+    width: 30px;
+    height: 30px;
+    border: none;
+ }
+
+ .number {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+ }
