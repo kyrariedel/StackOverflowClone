@@ -19,6 +19,14 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
         fetchData().catch((e) => console.log(e));
     }, [qid]);
 
+    const applyVote = (updated) => {
+        setQuestion((current) => ({
+            ...current,
+            upvote: updated.upvote || [],
+            downvote: updated.downvote || [],
+        }));
+    };
+
 
     return (
         <>
@@ -63,8 +71,9 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                 handleNewQuestion={handleNewQuestion}
                 account={account}
                 qid={qid}
-                voteup={question && question.upvote && question.upvote.length }
-                votedown={question && question.downvote && question.downvote.length}
+                voteup={question && question.upvote ? question.upvote.length : 0}
+                votedown={question && question.downvote ? question.downvote.length : 0}
+                onVoted={applyVote}
                 views={question && question.views}
                 text={question && question.text}
                 askby={question && question.asked_by}
@@ -144,19 +153,6 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                 }}
             >
                 Answer Question
-            </button>
-
-                <button
-                className="replyBtn"
-                onClick={() => {
-                    if (account) {
-                        handleNewComment();
-                    } else {
-                        alert("Please log in to reply to an answer");
-                    }
-                }}
-            >
-                Add a Comment
             </button>
         </>
     );

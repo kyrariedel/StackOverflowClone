@@ -3,10 +3,16 @@ import { upvoteQuestion } from "../../../../services/questionService";
 import { downvoteQuestion } from "../../../../services/questionService";
 
 // Header for the Answer page
-const AnswerHeader = ({ comCount, ansCount, title, handleNewQuestion, account, qid, voteup, votedown }) => {
+const AnswerHeader = ({ comCount, ansCount, title, handleNewQuestion, account, qid, voteup, votedown, onVoted }) => {
+    const applyVote = (updated) => {
+        if (onVoted && updated) {
+            onVoted(updated);
+        }
+    };
+
     const upvote = async () => {
         if (account) {
-            await upvoteQuestion(account, qid);
+            applyVote(await upvoteQuestion(account, qid));
         } else {
             alert("Please log in to vote");
         }
@@ -14,7 +20,7 @@ const AnswerHeader = ({ comCount, ansCount, title, handleNewQuestion, account, q
 
     const downvote = async () => {
         if (account) {
-            await downvoteQuestion(account, qid);
+            applyVote(await downvoteQuestion(account, qid));
         } else {
             alert("Please log in to vote");
         }
@@ -22,7 +28,7 @@ const AnswerHeader = ({ comCount, ansCount, title, handleNewQuestion, account, q
     return (
         <div>
             <div id="answersHeader" className="space_between right_padding">
-                <div className="bold_title">{ansCount} comment(s), {comCount} answer(s)</div>
+                <div className="bold_title">{ansCount} answer(s), {comCount} comment(s)</div>
                 <div className="bold_title answer_question_title">{title}</div>
                 <button
                     className="bluebtn"
@@ -45,7 +51,7 @@ const AnswerHeader = ({ comCount, ansCount, title, handleNewQuestion, account, q
                     }}>
                 </button>
                 <div className="number">
-                    {voteup-votedown}
+                    {(Number(voteup) || 0) - (Number(votedown) || 0)}
                 </div>
                 <button
                     className="downvote"

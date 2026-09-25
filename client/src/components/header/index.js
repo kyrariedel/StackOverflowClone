@@ -1,8 +1,12 @@
 import "./index.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Header = ({ search, setQuestionPage }) => {
     const [val, setVal] = useState(search);
+
+    useEffect(() => {
+        setVal(search);
+    }, [search]);
 
     return (
         <div id="header" className="header">

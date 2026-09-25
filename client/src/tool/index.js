@@ -83,14 +83,46 @@ const validateHyperlink = (text) => {
 };
 
 const handleHyperlink = (text = "") => {
+    const source = text == null ? "" : String(text);
     const pattern = /\[([^\]]*)\]\(([^)]*)\)/g;
+    const nodes = [];
+    let lastIndex = 0;
 
-    const replacedText = text.replace(
-        pattern,
-        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
-    );
+    for (const match of source.matchAll(pattern)) {
+        if (match.index > lastIndex) {
+            nodes.push(source.slice(lastIndex, match.index));
+        }
 
-    return <div dangerouslySetInnerHTML={{ __html: replacedText }} />;
+        const label = match[1];
+        const href = match[2];
+        const isSafeLink =
+            label.length > 0 &&
+            href.startsWith("https://") &&
+            href.length > "https://".length;
+
+        if (isSafeLink) {
+            nodes.push(
+                <a
+                    key={match.index}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {label}
+                </a>
+            );
+        } else {
+            nodes.push(match[0]);
+        }
+
+        lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex < source.length) {
+        nodes.push(source.slice(lastIndex));
+    }
+
+    return <div>{nodes}</div>;
 };
 
 export { getMetaData, handleHyperlink, validateHyperlink };
