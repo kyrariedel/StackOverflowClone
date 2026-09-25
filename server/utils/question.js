@@ -59,6 +59,14 @@ const getQuestionsByOrder = async (order) => {
         q = q.sort((a, b) => (
             b.ask_date_time - a.ask_date_time
         ));
+    } else if (order == 'votes') {
+        const score = (item) =>
+            (item.upvote || []).length - (item.downvote || []).length;
+        q = questions.sort((a, b) => {
+            const diff = score(b) - score(a);
+            if (diff !== 0) return diff;
+            return b.ask_date_time - a.ask_date_time;
+        });
     }
 
     return q;

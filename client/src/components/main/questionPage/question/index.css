@@ -7,11 +7,16 @@
 .postStats {
     color: #bbbbbb;
     text-align: center;
-    width: 10%;
+    width: 14%;
+}
+
+.vote_score {
+    color: #333333;
+    font-weight: bold;
 }
 
 .question_mid {
-    width: 60%;
+    width: 56%;
 }
 
 .postTitle {

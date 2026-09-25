@@ -10,4 +10,14 @@ const addAnswer = async (qid, ans) => {
     return res.data;
 };
 
-export { addAnswer };
+const acceptAnswer = async (qid, aid, username) => {
+    const res = await api.post(`${ANSWER_API_URL}/acceptAnswer`, {
+        qid,
+        aid,
+        username,
+    });
+
+    return res.data;
+};
+
+export { addAnswer, acceptAnswer };

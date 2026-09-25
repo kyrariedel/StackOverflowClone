@@ -6,6 +6,7 @@ import Comment from "./comment"
 import "./index.css";
 import QuestionBody from "./questionBody";
 import { getQuestionById } from "../../../services/questionService";
+import { acceptAnswer } from "../../../services/answerService";
 //import { getCommentById } from "../../../services/commentService";
 
 // Component for the Answers page
@@ -26,6 +27,25 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
             downvote: updated.downvote || [],
         }));
     };
+
+    const handleAccept = async (aid) => {
+        const res = await acceptAnswer(qid, aid, account);
+        if (res && !res.error) {
+            setQuestion((current) => ({
+                ...current,
+                accepted_answer: res.accepted_answer,
+            }));
+        }
+    };
+
+    const answers = [...((question && question.answers) || [])].sort((a, b) => {
+        const acceptedId = question.accepted_answer && String(question.accepted_answer);
+        const aAccepted = String(a._id) === acceptedId;
+        const bAccepted = String(b._id) === acceptedId;
+        if (aAccepted === bAccepted) return 0;
+        return aAccepted ? -1 : 1;
+    });
+    const isAuthor = Boolean(account) && account === question.asked_by;
 
 
     return (
@@ -108,14 +128,15 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                     />
                 ))}
 
-            {question &&
-                question.answers &&
-                question.answers.map((a, idx) => (
-                    <div key={idx}>
+            {answers.map((a) => (
+                    <div key={a._id}>
                         <Answer
                             text={a.text}
                             ansBy={a.ans_by}
                             meta={getMetaData(new Date(a.ans_date_time))}
+                            accepted={String(a._id) === String(question.accepted_answer || "")}
+                            canAccept={isAuthor}
+                            onAccept={() => handleAccept(a._id)}
                         />
                         {a.comments && a.comments.length > 0 && (
                             <div>

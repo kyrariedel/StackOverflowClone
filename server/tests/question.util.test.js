@@ -129,6 +129,24 @@ describe("getQuestionsByOrder newest and unanswered", () => {
     });
 });
 
+describe("getQuestionsByOrder votes", () => {
+    it("sorts by vote score, then by newest ask date", async () => {
+        mockFind([
+            { ...answeredOlder, upvote: ["a"], downvote: ["b", "c"] },
+            { ...answeredNewerAsk, upvote: ["a", "b"], downvote: [] },
+            { ...unanswered, upvote: ["a", "b"], downvote: [] },
+        ]);
+
+        const result = await getQuestionsByOrder("votes");
+
+        expect(result.map((q) => q._id)).toEqual([
+            "q-unanswered",
+            "q-newer-ask",
+            "q-older",
+        ]);
+    });
+});
+
 describe("addTag", () => {
     it("returns the existing tag id", async () => {
         Tag.findOne.mockResolvedValueOnce({

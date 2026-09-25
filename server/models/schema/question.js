@@ -14,7 +14,8 @@ module.exports = mongoose.Schema(
         ask_date_time: {type: Date, required: true}, 
         views: {type: Number, required: true}, 
         upvote: [{type: String}], 
-        downvote: [{type: String}], 
+        downvote: [{type: String}],
+        accepted_answer: {type: mongoose.Schema.Types.ObjectId, ref: "Answer"}, 
     },
     { collection: "Question" }
 );

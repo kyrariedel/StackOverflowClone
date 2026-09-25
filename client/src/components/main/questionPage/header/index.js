@@ -65,7 +65,7 @@ const QuestionHeader = ({
                 
                 <div id="question_count">{qcnt} questions</div>
                 <div className="btns">
-                    {["Newest", "Active", "Unanswered"].map((m, idx) => (
+                    {["Newest", "Active", "Unanswered", "Votes"].map((m, idx) => (
                         <OrderButton
                             key={idx}
                             message={m}

@@ -1,6 +1,9 @@
 import { getMetaData } from "../../../../tool";
 import "./index.css";
 
+const voteScore = (q) =>
+    (q.upvote || []).length - (q.downvote || []).length;
+
 const Question = ({ q, clickTag, handleAnswer, handleComment }) => {
     return (
         <div
@@ -11,6 +14,7 @@ const Question = ({ q, clickTag, handleAnswer, handleComment }) => {
             }}
         >
             <div className="postStats">
+                <div className="vote_score">{voteScore(q)} votes</div>
                 <div>{q.answers.length || 0} answers</div>
                 <div>{q.comments.length || 0} comments</div>
                 <div>{q.views} views</div>
