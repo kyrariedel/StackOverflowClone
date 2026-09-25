@@ -2,7 +2,8 @@ jest.mock("../models/questions");
 jest.mock("../models/tags");
 
 const Question = require("../models/questions");
-const { getQuestionsByOrder, filterQuestionsBySearch } = require("../utils/question");
+const Tag = require("../models/tags");
+const { addTag, getQuestionsByOrder, filterQuestionsBySearch } = require("../utils/question");
 
 const tagAndroid = { _id: "t-android", name: "android" };
 const tagReact = { _id: "t-react", name: "react" };
@@ -85,5 +86,73 @@ describe("filterQuestionsBySearch", () => {
         const result = await filterQuestionsBySearch(questions, "[android]");
 
         expect(result.map((q) => q._id)).toEqual(["q-older"]);
+    });
+
+    it("returns every question for an empty search", async () => {
+        const result = await filterQuestionsBySearch(questions, "");
+
+        expect(result).toHaveLength(3);
+    });
+
+    it("matches several tags and a keyword together", async () => {
+        const result = await filterQuestionsBySearch(
+            questions,
+            "website [android] [react]"
+        );
+
+        expect(result.map((q) => q._id).sort()).toEqual([
+            "q-newer-ask",
+            "q-older",
+        ]);
+    });
+});
+
+describe("getQuestionsByOrder newest and unanswered", () => {
+    it("returns only unanswered questions, newest first", async () => {
+        mockFind([answeredOlder, unanswered, answeredNewerAsk]);
+
+        const result = await getQuestionsByOrder("unanswered");
+
+        expect(result.map((q) => q._id)).toEqual(["q-unanswered"]);
+    });
+
+    it("sorts every question by ask date, newest first", async () => {
+        mockFind([answeredOlder, answeredNewerAsk, unanswered]);
+
+        const result = await getQuestionsByOrder("newest");
+
+        expect(result.map((q) => q._id)).toEqual([
+            "q-unanswered",
+            "q-newer-ask",
+            "q-older",
+        ]);
+    });
+});
+
+describe("addTag", () => {
+    it("returns the existing tag id", async () => {
+        Tag.findOne.mockResolvedValueOnce({
+            _id: "507f191e810c19729de860ea",
+            name: "react",
+        });
+
+        const result = await addTag("react");
+
+        expect(String(result)).toEqual("507f191e810c19729de860ea");
+        expect(Tag.findOne).toHaveBeenCalledWith({ name: "react" });
+        expect(Tag.create).not.toHaveBeenCalled();
+    });
+
+    it("creates a tag when the name is new", async () => {
+        Tag.findOne.mockResolvedValueOnce(null);
+        Tag.create.mockResolvedValueOnce({
+            _id: "65e9a5c2b26199dbcc3e6dc8",
+            save: jest.fn().mockResolvedValue({ _id: "65e9a5c2b26199dbcc3e6dc8" }),
+        });
+
+        const result = await addTag("javascript");
+
+        expect(Tag.create).toHaveBeenCalledWith({ name: "javascript" });
+        expect(String(result)).toEqual("65e9a5c2b26199dbcc3e6dc8");
     });
 });

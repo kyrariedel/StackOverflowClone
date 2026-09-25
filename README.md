@@ -4,7 +4,7 @@ A React and Express clone of a question-and-answer board. The client keeps the c
 
 ## Local Set-up
 
-MongoDB must be running and reachable at `mongodb://127.0.0.1:27017/fake_so` (the server connects to that URL directly in `server/server.js`).
+MongoDB must be running. Without `MONGO_URL` set, the server uses `mongodb://127.0.0.1:27017/fake_so`.
 
 ```bash
 # seed sample questions, answers, comments, tags, and one account
@@ -13,7 +13,7 @@ npm install
 node init.js
 
 # API on http://localhost:8000
-node server.js
+npm start
 ```
 
 In another terminal:
@@ -32,7 +32,7 @@ Seeded login (plaintext password stored by `server/init.js`): username `kyra123`
 
 ### Docker
 
-`docker-compose.yml` defines MongoDB, a server image, and a client image. The server image runs `node init.js && npm start`, and `server/package.json` has no `start` script. The server process also connects to `127.0.0.1` instead of the Compose service name `mongodb`. Use the local steps above.
+`docker-compose.yml` starts MongoDB, the API, and the client. The server service sets `MONGO_URL` to `mongodb://mongodb:27017/fake_so` and runs `npm start` (`node server.js`) after `node init.js`.
 
 ## What the app does
 
@@ -85,7 +85,7 @@ There are no answer-vote routes. `client/src/services/commentService.js` also ca
 | Existing tag id (`addTag`) | `server/tests/server.test.js` (question util module) | — | — |
 | App shell renders | — | `client/cypress/component/fake_so.cy.js` | — |
 
-Order and search helper tests in `server/tests/server.test.js` are commented out. `client/cypress/e2e/home.cy.js` only visits `https://example.cypress.io`. Comments and votes have no tests.
+Order, search, and `addTag` are covered in `server/tests/question.util.test.js` against the real helpers. `client/cypress/e2e/home.cy.js` visits the app at `http://localhost:3000`.
 
 ```bash
 cd server && npm test

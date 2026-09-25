@@ -8,6 +8,8 @@ services:
     build: server
     ports:
       - "8000:8000"
+    environment:
+      - MONGO_URL=mongodb://mongodb:27017/fake_so
     volumes:
       - logs:/app/logs
       - ./server:/usr/src/app

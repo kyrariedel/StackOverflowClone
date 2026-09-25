@@ -1,8 +1,5 @@
-// Add configuration setting for your server to this file
-// uncomment for MONGO_URL for docker
-// const MONGO_URL = "mongodb://mongodb:27017/fake_so";
-// config for local testing, that is, without docker.
-const MONGO_URL = "mongodb://localhost:27017/fake_so";
+// Local MongoDB by default. Compose sets MONGO_URL to mongodb://mongodb:27017/fake_so.
+const MONGO_URL = process.env.MONGO_URL || "mongodb://127.0.0.1:27017/fake_so";
 const CLIENT_URL = "http://localhost:3000";
 const port = 8000;
 
