@@ -20,7 +20,14 @@ const getQuestionsByFilter = async (req, res) => {
 
 // To get Questions by Id
 const getQuestionById = async (req, res) => {
-    let question = await Question.findOneAndUpdate({_id: req.params.qid}, {$inc: {views: 1}}).populate('answers comments upvote downvote');
+    let question = await Question.findOneAndUpdate(
+        {_id: req.params.qid},
+        {$inc: {views: 1}},
+        {new: true}
+    ).populate([
+        {path: "answers", populate: {path: "comments"}},
+        {path: "comments"},
+    ]);
     
     res.send(question);
 };

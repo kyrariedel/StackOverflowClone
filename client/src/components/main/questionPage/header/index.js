@@ -27,7 +27,7 @@ const QuestionHeader = ({
                     id="loginbtn"
                     onClick={() => {
                         if (account) {
-                            alert(`You are logged in as ${account.username}`)
+                            alert(`You are logged in as ${account}`)
                         } else {
                             handleLogin();
                         }

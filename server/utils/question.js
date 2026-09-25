@@ -15,7 +15,10 @@ const addTag = async (tname) => {
 };
 
 const getQuestionsByOrder = async (order) => {
-    let questions = await Question.find().populate({path: "tags"});
+    let questions = await Question.find().populate([
+        {path: "tags"},
+        {path: "answers"},
+    ]);
 
     let q = [];
     if (order == 'newest') {
@@ -72,8 +75,15 @@ const filterQuestionsBySearch = async (qlist, search = "") => {
     let text = [];
 
     if (searchKeyword.length > 0) {
-        title = qlist.filter((q) => (q.title.includes(searchKeyword)));
-        text = qlist.filter((q) => (q.text.includes(searchKeyword)));
+        const containsKeyword = (field, keyword) =>
+            (field || "").toLowerCase().includes(keyword.toLowerCase());
+
+        title = qlist.filter((q) =>
+            searchKeyword.some((keyword) => containsKeyword(q.title, keyword))
+        );
+        text = qlist.filter((q) =>
+            searchKeyword.some((keyword) => containsKeyword(q.text, keyword))
+        );
     }
 
     let tags = []

@@ -11,10 +11,12 @@ const Question = require('../models/questions');
 const Answer = require("../models/answers");
 const Tag = require("../models/tags");
 const Account = require("../models/accounts")
+const Comment = require("../models/comments");
 
 
 // Mocking the models
 jest.mock("../models/questions");
+jest.mock("../models/comments");
 jest.mock('../utils/question', () => ({
   addTag: jest.fn(),
   getQuestionsByOrder: jest.fn(),
@@ -126,6 +128,30 @@ describe('GET /getQuestionById/:qid', () => {
     // Asserting the response
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockPopulatedQuestion);
+  });
+
+  it('populates answers and comments, skips vote strings, and returns the incremented views', async () => {
+    const qid = '65e9b5a995b6c7045a30d823';
+    const populate = jest.fn().mockResolvedValueOnce({
+      views: 100,
+      answers: [{ comments: [{ text: 'nested' }] }],
+      comments: [{ text: 'on the question' }],
+    });
+    Question.findOneAndUpdate = jest.fn().mockReturnValue({ populate });
+
+    const response = await supertest(server)
+      .get(`/question/getQuestionById/${qid}`);
+
+    expect(response.status).toBe(200);
+    expect(Question.findOneAndUpdate).toHaveBeenCalledWith(
+      { _id: qid },
+      { $inc: { views: 1 } },
+      { new: true }
+    );
+    expect(populate).toHaveBeenCalledWith([
+      { path: "answers", populate: { path: "comments" } },
+      { path: "comments" },
+    ]);
   });
 });
 
@@ -581,6 +607,57 @@ describe('GET /authenticateAccount', () => {
       username: 'kyra123',
       password: '123',
     });
+  });
+
+  it('rejects a username when the password does not match', async () => {
+    Account.findOne = jest.fn().mockResolvedValueOnce(null);
+
+    const response = await supertest(server)
+      .get('/account/authenticateAccount')
+      .query({
+        username: 'kyra123',
+        password: 'wrong',
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual("");
+    expect(Account.findOne).toHaveBeenCalledWith({
+      username: 'kyra123',
+      password: 'wrong',
+    });
+  });
+})
+
+describe('POST /addComment on an answer', () => {
+  beforeEach(() => {
+    server = require("../server");
+  })
+
+  afterEach(async () => {
+    server.close();
+    await mongoose.disconnect()
+  });
+
+  it('attaches the new comment to the answer', async () => {
+    const created = { _id: "commentId", text: "on the answer" };
+    Comment.create.mockResolvedValueOnce(created);
+    Answer.findOneAndUpdate.mockResolvedValueOnce({ _id: "a1" });
+
+    const response = await supertest(server)
+      .post("/comment/addComment")
+      .send({
+        qid: "q1",
+        aid: "a1",
+        com: { text: "on the answer", com_by: "kyra123", com_date_time: "2024-01-01T00:00:00.000Z" },
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(created);
+    expect(Answer.findOneAndUpdate).toHaveBeenCalledWith(
+      { _id: "a1" },
+      { $push: { comments: { $each: ["commentId"], $position: 0 } } },
+      { new: true }
+    );
   });
 })
 
