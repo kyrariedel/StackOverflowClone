@@ -9,6 +9,7 @@ import NewAnswer from "./newAnswer";
 import NewComment from "./newComment";
 import Signup from "./account/signup";
 import Login from "./account/login";
+import ProfilePage from "./profile";
 
 const Main = ({ search = "", title, setQuestionPage }) => {
     const [page, setPage] = useState("home");
@@ -16,6 +17,7 @@ const Main = ({ search = "", title, setQuestionPage }) => {
     const [qid, setQid] = useState("");
     const [aid, setAid] = useState("");
     const [account, setAccount] = useState("");
+    const [profileUser, setProfileUser] = useState("");
     let selected = "";
     let content = null;
 
@@ -75,6 +77,14 @@ const Main = ({ search = "", title, setQuestionPage }) => {
         setAccount("");
     }
 
+    const handleProfile = (username) => {
+        if (!username) {
+            return;
+        }
+        setProfileUser(username);
+        setPage("profile");
+    }
+
     const getQuestionPage = (order = "newest", search = "") => {
         return (
             <QuestionPage
@@ -89,6 +99,7 @@ const Main = ({ search = "", title, setQuestionPage }) => {
                 handleSignup={handleSignup}
                 handleLogin={handleLogin}
                 handleLogout={handleLogout}
+                handleProfile={handleProfile}
                 account={account}
             />
         );
@@ -114,6 +125,20 @@ const Main = ({ search = "", title, setQuestionPage }) => {
             );
             break;
         }
+        case "profile": {
+            selected = "";
+            content = (
+                <ProfilePage
+                    username={profileUser}
+                    handleAnswer={handleAnswer}
+                    handleSignup={handleSignup}
+                    handleLogin={handleLogin}
+                    handleLogout={handleLogout}
+                    account={account}
+                />
+            );
+            break;
+        }
         case "answer": {
             selected = "";
             content = (
@@ -125,6 +150,7 @@ const Main = ({ search = "", title, setQuestionPage }) => {
                     handleSignup={handleSignup}
                     handleLogin={handleLogin}
                     handleLogout={handleLogout}
+                    handleProfile={handleProfile}
                     account={account}
                 />
             );
@@ -141,6 +167,7 @@ const Main = ({ search = "", title, setQuestionPage }) => {
                     handleSignup={handleSignup}
                     handleLogin={handleLogin}
                     handleLogout={handleLogout}
+                    handleProfile={handleProfile}
                     account={account}
                 />
 
@@ -213,6 +240,7 @@ const Main = ({ search = "", title, setQuestionPage }) => {
                 selected={selected}
                 handleQuestions={handleQuestions}
                 handleTags={handleTags}
+                handleProfile={handleProfile}
                 account={account}
             />
             <div id="right_main" className="right_main">

@@ -17,4 +17,10 @@ const authenticateAccount = async (username, password) => {
 }
 
 
-export { addAccount, authenticateAccount };
+const getProfile = async (username) => {
+    const res = await api.get(`${ACCOUNT_API_URL}/profile/${encodeURIComponent(username)}`);
+
+    return res.data;
+};
+
+export { addAccount, authenticateAccount, getProfile };

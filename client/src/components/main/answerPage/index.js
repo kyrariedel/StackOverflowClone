@@ -10,7 +10,7 @@ import { acceptAnswer } from "../../../services/answerService";
 //import { getCommentById } from "../../../services/commentService";
 
 // Component for the Answers page
-const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment, handleSignup, handleLogin, handleLogout, account }) => {
+const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment, handleSignup, handleLogin, handleLogout, handleProfile, account }) => {
     const [question, setQuestion] = useState({});
     useEffect(() => {
         const fetchData = async () => {
@@ -104,6 +104,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                 text={question && question.text}
                 askby={question && question.asked_by}
                 meta={question && getMetaData(new Date(question.ask_date_time))}
+                handleProfile={handleProfile}
             />
             <button
                 className="replyBtn"
@@ -137,6 +138,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                             accepted={String(a._id) === String(question.accepted_answer || "")}
                             canAccept={isAuthor}
                             onAccept={() => handleAccept(a._id)}
+                            handleProfile={handleProfile}
                         />
                         {a.comments && a.comments.length > 0 && (
                             <div>

@@ -1,9 +1,17 @@
 import "./index.css";
 
-const SideBarNav = ({ selected = "", handleQuestions, handleTags, account }) => {
+const SideBarNav = ({ selected = "", handleQuestions, handleTags, handleProfile, account }) => {
     return (
         <div id="sideBarNav" className="sideBarNav">
-            <div id="profile" className="header_login">
+            <div
+                id="profile"
+                className="header_login"
+                onClick={() => {
+                    if (account) {
+                        handleProfile(account);
+                    }
+                }}
+            >
                 Welcome {account}
             </div>
             <div

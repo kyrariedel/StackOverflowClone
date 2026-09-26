@@ -45,3 +45,11 @@
 .answer_author {
     color: green;
 }
+
+.author_link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+}

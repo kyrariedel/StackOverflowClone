@@ -434,6 +434,61 @@ describe('POST /addComment on an answer', () => {
   });
 })
 
+describe('GET /account/profile/:username', () => {
+  beforeEach(() => {
+    server = require("../server");
+  })
+
+  afterEach(async () => {
+    server.close();
+    await mongoose.disconnect()
+  });
+
+  it('lists posts and adds reputation when they are voted on', async () => {
+    Account.findOne = jest.fn().mockResolvedValueOnce({
+      username: 'kyra123',
+      name: 'Kyra Riedel',
+      password: '123',
+    });
+    Question.find = jest.fn()
+      .mockResolvedValueOnce([{
+        _id: 'q1',
+        title: 'A question',
+        upvote: ['a', 'b'],
+        downvote: ['c'],
+        views: 4,
+      }])
+      .mockResolvedValueOnce([{
+        _id: 'q9',
+        title: 'Parent question',
+        answers: ['ans1'],
+      }]);
+    Answer.find = jest.fn().mockResolvedValueOnce([{
+      _id: 'ans1',
+      text: 'An answer',
+      upvote: ['a'],
+      downvote: [],
+    }]);
+
+    const response = await supertest(server).get('/account/profile/kyra123');
+
+    expect(response.status).toBe(200);
+    expect(response.body.name).toEqual('Kyra Riedel');
+    expect(response.body.reputation).toEqual(28);
+    expect(response.body.questions).toEqual([
+      { _id: 'q1', title: 'A question', score: 1, views: 4 },
+    ]);
+    expect(response.body.answers[0]).toMatchObject({
+      _id: 'ans1',
+      text: 'An answer',
+      score: 1,
+      questionId: 'q9',
+      questionTitle: 'Parent question',
+    });
+    expect(response.body.password).toBeUndefined();
+  });
+})
+
 test('Add server unit tests', () => {
   expect(true);
 });

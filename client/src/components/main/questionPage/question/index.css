@@ -50,6 +50,14 @@
     color: red;
 }
 
+.author_link {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
 .question_meta {
     color: #bbbbbb;
 }

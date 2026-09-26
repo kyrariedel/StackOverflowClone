@@ -16,7 +16,8 @@ const QuestionPage = ({
     handleNewQuestion,
     handleSignup,
     handleLogin, 
-    handleLogout, 
+    handleLogout,
+    handleProfile,
     account,
 }) => {
     const [qlist, setQlist] = useState([]);
@@ -48,6 +49,7 @@ const QuestionPage = ({
                         clickTag={clickTag}
                         handleAnswer={handleAnswer}
                         handleComment={handleComment}
+                        handleProfile={handleProfile}
                     />
                 ))}
             </div>

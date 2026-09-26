@@ -4,7 +4,7 @@ import "./index.css";
 const voteScore = (q) =>
     (q.upvote || []).length - (q.downvote || []).length;
 
-const Question = ({ q, clickTag, handleAnswer, handleComment }) => {
+const Question = ({ q, clickTag, handleAnswer, handleComment, handleProfile }) => {
     return (
         <div
             className="question right_padding"
@@ -39,7 +39,15 @@ const Question = ({ q, clickTag, handleAnswer, handleComment }) => {
                 </div>
             </div>
             <div className="lastActivity">
-                <div className="question_author">{q.asked_by}</div>
+                <button
+                    className="question_author author_link"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handleProfile(q.asked_by);
+                    }}
+                >
+                    {q.asked_by}
+                </button>
                 <div>&nbsp;</div>
                 <div className="question_meta">
                     asked {getMetaData(new Date(q.ask_date_time))}
