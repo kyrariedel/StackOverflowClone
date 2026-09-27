@@ -15,6 +15,38 @@
     font-weight: bold;
 }
 
+.answer_stat.has_answers,
+.answer_stat.accepted {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 2px 8px;
+    cursor: default;
+}
+
+.answer_stat.has_answers {
+    color: #2f7d32;
+    background: transparent;
+    border: 1px solid #2f7d32;
+}
+
+.answer_stat.has_answers:hover {
+    color: #2f7d32;
+    background: transparent;
+    border: 1px solid #2f7d32;
+}
+
+.answer_stat.accepted {
+    color: #ffffff;
+    background: #2f7d32;
+    border: 1px solid #2f7d32;
+}
+
+.answer_stat.accepted:hover {
+    color: #ffffff;
+    background: #2f7d32;
+    border: 1px solid #2f7d32;
+}
+
 .question_mid {
     width: 56%;
 }

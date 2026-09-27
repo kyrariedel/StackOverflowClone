@@ -1,9 +1,17 @@
 import "./index.css";
-import OrderButton from "./orderButton";
+import { Segmented } from "antd";
+
+const SORTS = [
+    { label: "Newest", value: "newest" },
+    { label: "Active", value: "active" },
+    { label: "Unanswered", value: "unanswered" },
+    { label: "Score", value: "score" },
+];
 
 const QuestionHeader = ({
     title_text,
     qcnt,
+    order,
     setQuestionOrder,
     handleNewQuestion,
     account,
@@ -26,17 +34,13 @@ const QuestionHeader = ({
                 </button>
             </div>
             <div className="space_between right_padding">
-                
                 <div id="question_count">{qcnt} questions</div>
-                <div className="btns">
-                    {["Newest", "Active", "Unanswered", "Votes"].map((m, idx) => (
-                        <OrderButton
-                            key={idx}
-                            message={m}
-                            setQuestionOrder={setQuestionOrder}
-                        />
-                    ))}
-                </div>
+                <Segmented
+                    className="order_segment"
+                    options={SORTS}
+                    value={order || "newest"}
+                    onChange={setQuestionOrder}
+                />
             </div>
         </div>
     );

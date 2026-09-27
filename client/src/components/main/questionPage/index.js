@@ -38,6 +38,7 @@ const QuestionPage = ({
             <QuestionHeader
                 title_text={title_text}
                 qcnt={qlist.length}
+                order={order}
                 setQuestionOrder={setQuestionOrder}
                 handleNewQuestion={handleNewQuestion}
                 account={account}

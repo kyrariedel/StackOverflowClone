@@ -18,6 +18,21 @@ describe("home page", () => {
         });
     });
 
+    it("sorts questions by score from the segmented control", () => {
+        cy.intercept("GET", "**/question/getQuestion*").as("questions");
+        cy.visit("/");
+        cy.wait("@questions");
+        cy.get(".ant-segmented").within(() => {
+            cy.contains("Newest");
+            cy.contains("Active");
+            cy.contains("Unanswered");
+            cy.contains("Votes").should("not.exist");
+            cy.contains("Score").click();
+        });
+        cy.wait("@questions").its("request.url").should("include", "order=score");
+        cy.get(".vote_score").first().should("contain", "votes");
+    });
+
     it("opens the tags page from the sidebar", () => {
         cy.visit("/");
         cy.get("#menu_tag").click();

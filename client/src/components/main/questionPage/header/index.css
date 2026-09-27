@@ -1,3 +1,7 @@
 .header_buffer {
     height: 8px;
 }
+
+.order_segment {
+    align-self: center;
+}

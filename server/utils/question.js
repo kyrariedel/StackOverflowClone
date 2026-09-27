@@ -59,7 +59,7 @@ const getQuestionsByOrder = async (order) => {
         q = q.sort((a, b) => (
             b.ask_date_time - a.ask_date_time
         ));
-    } else if (order == 'votes') {
+    } else if (order == 'votes' || order == 'score') {
         const score = (item) =>
             (item.upvote || []).length - (item.downvote || []).length;
         q = questions.sort((a, b) => {

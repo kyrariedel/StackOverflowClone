@@ -5,6 +5,16 @@ import "./index.css";
 const voteScore = (q) =>
     (q.upvote || []).length - (q.downvote || []).length;
 
+const viewsColor = (views) => {
+    const count = Number(views) || 0;
+    if (count <= 1000) {
+        return undefined;
+    }
+    const t = Math.min(1, Math.log10(count / 1000) / 2);
+    const hue = 45 * (1 - t);
+    return `hsl(${hue}, 80%, 28%)`;
+};
+
 const searchKeywords = (search = "") =>
     (search.replace(/\[[^\]]*\]/g, " ").match(/\b\w+\b/g) || []);
 
@@ -40,9 +50,27 @@ const Question = ({ q, clickTag, handleAnswer, handleComment, handleProfile, sea
         >
             <div className="postStats">
                 <div className="vote_score">{voteScore(q)} votes</div>
-                <div>{q.answers.length || 0} answers</div>
+                <div
+                    className={
+                        q.accepted_answer
+                            ? "answer_stat accepted"
+                            : (q.answers.length || 0) > 0
+                            ? "answer_stat has_answers"
+                            : "answer_stat"
+                    }
+                    onClick={(e) => {
+                        if (q.accepted_answer || (q.answers.length || 0) > 0) {
+                            e.stopPropagation();
+                        }
+                    }}
+                >
+                    {q.accepted_answer ? "✓ " : ""}
+                    {q.answers.length || 0} answers
+                </div>
                 <div>{q.comments.length || 0} comments</div>
-                <div>{q.views} views</div>
+                <div className="view_count" style={{ color: viewsColor(q.views) }}>
+                    {q.views} views
+                </div>
             </div>
             <div className="question_mid">
                 <div className="postTitle">{highlightTitle(q.title, search)}</div>
