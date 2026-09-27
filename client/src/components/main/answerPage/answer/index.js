@@ -1,4 +1,5 @@
 import { handleHyperlink } from "../../../../tool";
+import Avatar from "../../baseComponents/avatar";
 import "./index.css";
 
 // Component for the Answer Page
@@ -26,6 +27,7 @@ const Answer = ({ text, ansBy, meta, accepted, canAccept, onAccept, handleProfil
                     className="answer_author author_link"
                     onClick={() => handleProfile && handleProfile(ansBy)}
                 >
+                    <Avatar username={ansBy} size={32} />
                     {ansBy}
                 </button>
                 <div className="answer_question_meta">{meta}</div>

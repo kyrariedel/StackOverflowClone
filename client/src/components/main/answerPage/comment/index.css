@@ -13,5 +13,8 @@
 }
 
 .comment_author {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     color: blue;
 }

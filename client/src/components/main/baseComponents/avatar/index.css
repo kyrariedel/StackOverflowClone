@@ -1,0 +1,11 @@
+.avatar {
+    display: block;
+    flex: 0 0 auto;
+    border-radius: 4px;
+}
+
+.author_link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}

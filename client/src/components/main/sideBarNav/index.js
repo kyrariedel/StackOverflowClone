@@ -1,19 +1,8 @@
 import "./index.css";
 
-const SideBarNav = ({ selected = "", handleQuestions, handleTags, handleProfile, account }) => {
+const SideBarNav = ({ selected = "", handleQuestions, handleTags }) => {
     return (
         <div id="sideBarNav" className="sideBarNav">
-            <div
-                id="profile"
-                className="header_login"
-                onClick={() => {
-                    if (account) {
-                        handleProfile(account);
-                    }
-                }}
-            >
-                Welcome {account}
-            </div>
             <div
                 id="menu_question"
                 className={`menu_button ${

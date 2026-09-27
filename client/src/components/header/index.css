@@ -16,6 +16,30 @@
     background: #dddddd;
 }
 
+.header_search {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header_profile {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.header_profile:hover {
+    background: #c8c8c8;
+}
+
 .title {
     font-size: 32px;
     font-weight: 800;

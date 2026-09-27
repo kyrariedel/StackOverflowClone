@@ -1,6 +1,7 @@
 import "./index.css";
 import React from "react";
 import { handleHyperlink } from "../../../../tool";
+import Avatar from "../../baseComponents/avatar";
 
 // Component for the Question's Body
 const QuestionBody = ({ views, text, askby, meta, handleProfile }) => {
@@ -13,6 +14,7 @@ const QuestionBody = ({ views, text, askby, meta, handleProfile }) => {
                     className="question_author author_link"
                     onClick={() => handleProfile && handleProfile(askby)}
                 >
+                    <Avatar username={askby} size={36} />
                     {askby}
                 </button>
                 <div className="answer_question_meta">asked {meta}</div>

@@ -1,4 +1,5 @@
 import { getMetaData } from "../../../../tool";
+import Avatar from "../../baseComponents/avatar";
 import "./index.css";
 
 const voteScore = (q) =>
@@ -70,6 +71,7 @@ const Question = ({ q, clickTag, handleAnswer, handleComment, handleProfile, sea
                         handleProfile(q.asked_by);
                     }}
                 >
+                    <Avatar username={q.asked_by} size={28} />
                     {q.asked_by}
                 </button>
                 <div>&nbsp;</div>

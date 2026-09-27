@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getProfile } from "../../../services/accountService";
+import Avatar from "../baseComponents/avatar";
 import "./index.css";
 
 const ProfilePage = ({
@@ -46,8 +47,13 @@ const ProfilePage = ({
             </div>
             {profile && (
                 <div className="profile_page right_padding">
-                    <div className="bold_title">{profile.name}</div>
-                    <div className="profile_username">{profile.username}</div>
+                    <div className="profile_heading">
+                        <Avatar username={profile.username} size={80} />
+                        <div>
+                            <div className="bold_title">{profile.name}</div>
+                            <div className="profile_username">{profile.username}</div>
+                        </div>
+                    </div>
                     <div id="reputation" className="profile_reputation">
                         {profile.reputation} reputation
                     </div>

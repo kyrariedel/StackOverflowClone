@@ -2,6 +2,12 @@
     margin-top: 70px;
 }
 
+.profile_heading {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
 .profile_username {
     color: #666666;
 }
