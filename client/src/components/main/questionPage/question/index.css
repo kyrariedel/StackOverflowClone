@@ -23,6 +23,12 @@
     color: cornflowerblue;
 }
 
+.search_hit {
+    background: #fff3a3;
+    color: #222222;
+    padding: 0 2px;
+}
+
 .question_tags {
     margin-top: 1%;
 }

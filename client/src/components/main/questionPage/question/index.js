@@ -4,7 +4,31 @@ import "./index.css";
 const voteScore = (q) =>
     (q.upvote || []).length - (q.downvote || []).length;
 
-const Question = ({ q, clickTag, handleAnswer, handleComment, handleProfile }) => {
+const searchKeywords = (search = "") =>
+    (search.replace(/\[[^\]]*\]/g, " ").match(/\b\w+\b/g) || []);
+
+const highlightTitle = (title = "", search = "") => {
+    const keywords = searchKeywords(search).filter((keyword) =>
+        title.toLowerCase().includes(keyword.toLowerCase())
+    );
+    if (!keywords.length) {
+        return title;
+    }
+
+    const pattern = new RegExp(
+        `(${keywords.map((keyword) => keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+        "gi"
+    );
+    return title.split(pattern).map((part, index) =>
+        keywords.some((keyword) => keyword.toLowerCase() === part.toLowerCase()) ? (
+            <mark key={index} className="search_hit">{part}</mark>
+        ) : (
+            part
+        )
+    );
+};
+
+const Question = ({ q, clickTag, handleAnswer, handleComment, handleProfile, search }) => {
     return (
         <div
             className="question right_padding"
@@ -20,7 +44,7 @@ const Question = ({ q, clickTag, handleAnswer, handleComment, handleProfile }) =
                 <div>{q.views} views</div>
             </div>
             <div className="question_mid">
-                <div className="postTitle">{q.title}</div>
+                <div className="postTitle">{highlightTitle(q.title, search)}</div>
                 <div className="question_tags">
                     {q.tags.map((tag, idx) => {
                         return (

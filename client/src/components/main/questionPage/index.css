@@ -5,3 +5,13 @@
 .question_list:last-child {
     border-bottom: #000000 1px dashed;
 }
+
+.pager {
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 24px;
+}
+
+.page_current {
+    background: #cccccc;
+}
