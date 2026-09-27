@@ -1,6 +1,6 @@
 const AuthButtons = ({ account, handleSignup, handleLogin, handleLogout }) => {
     return (
-        <div id="login" className="header_button">
+        <div id="login" className="header_auth">
             {!account && (
                 <>
                     <button

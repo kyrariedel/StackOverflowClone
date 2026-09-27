@@ -1,16 +1,11 @@
 import { useEffect, useState } from "react";
 import { getProfile } from "../../../services/accountService";
 import Avatar from "../baseComponents/avatar";
-import AuthButtons from "../baseComponents/authButtons";
 import "./index.css";
 
 const ProfilePage = ({
     username,
     handleAnswer,
-    handleSignup,
-    handleLogin,
-    handleLogout,
-    account,
 }) => {
     const [profile, setProfile] = useState(null);
 
@@ -25,12 +20,6 @@ const ProfilePage = ({
 
     return (
         <>
-            <AuthButtons
-                account={account}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-            />
             {profile && (
                 <div className="profile_page right_padding">
                     <div className="profile_heading">

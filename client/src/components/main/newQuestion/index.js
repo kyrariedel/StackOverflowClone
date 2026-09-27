@@ -6,9 +6,8 @@ import "./index.css";
 import { validateHyperlink } from "../../../tool";
 
 import { addQuestion } from "../../../services/questionService";
-import AuthButtons from "../baseComponents/authButtons";
 
-const NewQuestion = ({ handleQuestions, handleSignup, handleLogin, handleLogout, account }) => {
+const NewQuestion = ({ handleQuestions, account }) => {
     const [title, setTitle] = useState("");
     const [text, setText] = useState("");
     const [tag, setTag] = useState("");
@@ -75,15 +74,6 @@ const NewQuestion = ({ handleQuestions, handleSignup, handleLogin, handleLogout,
 
     return (
         <div>
-            <AuthButtons
-                account={account}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-            />
-            <div className="header_buffer">
-                &nbsp;
-            </div>
             <Form>
                 <Input
                     title={"Question Title"}

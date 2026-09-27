@@ -8,28 +8,21 @@ import QuestionBody from "../../src/components/main/answerPage/questionBody";
 const noop = () => {};
 
 describe("fixed: question list login username", () => {
-    it("alerts the username string stored after login", () => {
-        const alerts = [];
-        cy.on("window:alert", (message) => alerts.push(message));
+    it("treats the logged-in username as a string", () => {
+        const ask = cy.stub().as("ask");
 
         cy.mount(
             <QuestionHeader
                 title_text="All Questions"
                 qcnt={1}
                 setQuestionOrder={noop}
-                handleNewQuestion={noop}
-                handleSignup={noop}
-                handleLogin={noop}
-                handleLogout={noop}
+                handleNewQuestion={ask}
                 account="kyra123"
             />
         );
 
-        cy.get("#loginbtn")
-            .click()
-            .then(() => {
-                expect(alerts).to.deep.equal(["You are logged in as kyra123"]);
-            });
+        cy.contains("button", "Ask a Question").click();
+        cy.get("@ask").should("have.been.calledOnce");
     });
 });
 

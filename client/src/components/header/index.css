@@ -24,7 +24,6 @@
     align-items: center;
     gap: 12px;
     flex: 1;
-    max-width: 640px;
     margin: 0 24px;
 }
 
@@ -33,6 +32,7 @@
     align-items: center;
     gap: 10px;
     flex: 1;
+    max-width: 640px;
     height: 40px;
     padding: 0 14px;
     border: 1px solid #d0d0d0;
@@ -73,6 +73,16 @@
 
 .header_profile:hover {
     background: #ececec;
+}
+
+.header_auth {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header_auth .bluebtn_login {
+    margin-right: 0;
 }
 
 .title {

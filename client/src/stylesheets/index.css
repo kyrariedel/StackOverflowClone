@@ -19,3 +19,13 @@ body,
 body {
     margin: 0;
 }
+
+.app_shell {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1264px;
+    height: 100%;
+    margin: 0 auto;
+}

@@ -4,9 +4,8 @@ import Form from "../baseComponents/form";
 import Textarea from "../baseComponents/textarea";
 import { validateHyperlink } from "../../../tool";
 import { addComment } from "../../../services/commentService";
-import AuthButtons from "../baseComponents/authButtons";
 
-const NewComment = ({ qid, aid, handleComment, handleSignup, handleLogin, handleLogout, account }) => {
+const NewComment = ({ qid, aid, handleComment, account }) => {
     const [text, setText] = useState("");
     const [textErr, setTextErr] = useState("");
     const postComment = async () => {
@@ -40,15 +39,6 @@ const NewComment = ({ qid, aid, handleComment, handleSignup, handleLogin, handle
     };
     return (
         <div>
-            <AuthButtons
-                account={account}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-            />
-            <div className="header_buffer">
-                &nbsp;
-            </div>
             <Form>
                 <Textarea
                     title={"Comment Text"}

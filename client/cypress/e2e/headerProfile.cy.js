@@ -2,10 +2,24 @@ describe("header profile", () => {
     it("shows the photo and reputation beside search and opens the profile", () => {
         cy.visit("/");
         cy.get("#sideBarNav").should("not.contain", "Welcome");
+        cy.get("#sideBarNav").should("have.css", "border-right-style", "solid");
+        cy.get("#sideBarNav").should("have.css", "border-right-color", "rgb(228, 228, 228)");
+        cy.get(".question").first().should("have.css", "border-top-style", "solid");
+        cy.get(".question").first().should("have.css", "border-top-color", "rgb(228, 228, 228)");
+        cy.get("#logoutbtn").should("not.exist");
+        cy.get("#searchBar").then(($search) => {
+            const searchRight = $search[0].getBoundingClientRect().right;
+            cy.get("#signupbtn").then(($signup) => {
+                expect($signup[0].getBoundingClientRect().left).to.be.greaterThan(searchRight - 1);
+            });
+            cy.get("#loginbtn").then(($login) => {
+                expect($login[0].getBoundingClientRect().left).to.be.greaterThan(searchRight - 1);
+            });
+        });
         cy.get("#loginbtn").click();
         cy.get("#formAccountUsernameInput").type("kyra123");
         cy.get("#formAccountPasswordInput").type("123");
-        cy.contains("button", "Login").click();
+        cy.get(".form_postBtn").click();
 
         cy.get("#signupbtn").should("not.exist");
         cy.get("#loginbtn").should("not.exist");
@@ -21,6 +35,11 @@ describe("header profile", () => {
                 expect($button[0].getBoundingClientRect().left).to.be.greaterThan(
                     $search[0].getBoundingClientRect().right - 1
                 );
+                cy.get("#logoutbtn").then(($logout) => {
+                    expect($logout[0].getBoundingClientRect().left).to.be.greaterThan(
+                        $button[0].getBoundingClientRect().right - 1
+                    );
+                });
             });
         });
 

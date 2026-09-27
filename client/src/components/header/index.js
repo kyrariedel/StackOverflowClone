@@ -1,6 +1,7 @@
 import "./index.css";
 import { useEffect, useState } from "react";
 import Avatar from "../main/baseComponents/avatar";
+import AuthButtons from "../main/baseComponents/authButtons";
 import { getProfile } from "../../services/accountService";
 
 const formatReputation = (value) => {
@@ -13,7 +14,7 @@ const formatReputation = (value) => {
     return `${text}k`;
 };
 
-const Header = ({ search, setQuestionPage, account, onProfile, profileTick }) => {
+const Header = ({ search, setQuestionPage, account, onProfile, profileTick, onSignup, onLogin, onLogout }) => {
     const [val, setVal] = useState(search);
     const [reputation, setReputation] = useState(null);
 
@@ -74,6 +75,12 @@ const Header = ({ search, setQuestionPage, account, onProfile, profileTick }) =>
                         <span>{reputation == null ? "" : formatReputation(reputation)}</span>
                     </button>
                 )}
+                <AuthButtons
+                    account={account}
+                    handleSignup={onSignup}
+                    handleLogin={onLogin}
+                    handleLogout={onLogout}
+                />
             </div>
         </div>
     );

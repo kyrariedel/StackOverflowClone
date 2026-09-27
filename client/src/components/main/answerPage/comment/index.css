@@ -2,7 +2,7 @@
 .comment {
     display: flex;
     flex-direction: row;
-    border-bottom: #000000 0.5px dashed;
+    border-bottom: 1px solid #e4e4e4;
     margin-top: 0;
     margin-bottom: 0; 
 }

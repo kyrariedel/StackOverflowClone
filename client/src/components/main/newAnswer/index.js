@@ -4,9 +4,8 @@ import Form from "../baseComponents/form";
 import Textarea from "../baseComponents/textarea";
 import { validateHyperlink } from "../../../tool";
 import { addAnswer } from "../../../services/answerService";
-import AuthButtons from "../baseComponents/authButtons";
 
-const NewAnswer = ({ qid, handleAnswer, handleSignup, handleLogin, handleLogout, account }) => {
+const NewAnswer = ({ qid, handleAnswer, account }) => {
     const [text, setText] = useState("");
     const [textErr, setTextErr] = useState("");
     const postAnswer = async () => {
@@ -40,15 +39,6 @@ const NewAnswer = ({ qid, handleAnswer, handleSignup, handleLogin, handleLogout,
     };
     return (
         <div>
-            <AuthButtons
-                account={account}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-            />
-            <div className="header_buffer">
-                &nbsp;
-            </div>
             <Form>
                 <Textarea
                     title={"Answer Text"}

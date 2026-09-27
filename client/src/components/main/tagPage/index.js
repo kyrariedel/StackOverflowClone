@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Tag from "./tag";
 import { getTagsWithQuestionNumber } from "../../../services/tagService";
-import AuthButtons from "../baseComponents/authButtons";
 
-const TagPage = ({ clickTag, handleNewQuestion, handleSignup, handleLogin, handleLogout, account }) => {
+const TagPage = ({ clickTag, handleNewQuestion, account }) => {
     const [tlist, setTlist] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
@@ -16,12 +15,6 @@ const TagPage = ({ clickTag, handleNewQuestion, handleSignup, handleLogin, handl
     }, []);
     return (
         <>
-            <AuthButtons
-                account={account}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-            />
             <div className="space_between right_padding">
                 <div className="bold_title">{tlist.length} Tags</div>
                 <div className="bold_title">All Tags</div>

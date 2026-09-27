@@ -16,9 +16,6 @@ const QuestionPage = ({
     handleAnswer,
     handleComment,
     handleNewQuestion,
-    handleSignup,
-    handleLogin, 
-    handleLogout,
     handleProfile,
     account,
 }) => {
@@ -43,9 +40,6 @@ const QuestionPage = ({
                 qcnt={qlist.length}
                 setQuestionOrder={setQuestionOrder}
                 handleNewQuestion={handleNewQuestion}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
                 account={account}
             />
             <div id="question_list" className="question_list">

@@ -11,7 +11,7 @@ import Signup from "./account/signup";
 import Login from "./account/login";
 import ProfilePage from "./profile";
 
-const Main = ({ search = "", title, setQuestionPage, account, setAccount, profileTick, onPageChange }) => {
+const Main = ({ search = "", title, setQuestionPage, account, setAccount, profileTick, authAction, onPageChange }) => {
     const [page, setPage] = useState("home");
     const [questionOrder, setQuestionOrder] = useState("newest");
     const [qid, setQid] = useState("");
@@ -64,18 +64,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
         setPage("newComment");
     };
 
-    const handleSignup = () => {
-        setPage("signup");
-    }
-
-    const handleLogin = () => {
-        setPage("login");
-    }
-
-    const handleLogout = () => {
-        setAccount("");
-    }
-
     const handleProfile = (username) => {
         if (!username) {
             return;
@@ -89,6 +77,20 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
             handleProfile(account);
         }
     }, [profileTick]);
+
+    useEffect(() => {
+        if (!authAction || !authAction.tick) {
+            return;
+        }
+        if (authAction.name === "logout") {
+            setAccount("");
+            setPage("home");
+        } else if (authAction.name === "signup") {
+            setPage("signup");
+        } else if (authAction.name === "login") {
+            setPage("login");
+        }
+    }, [authAction]);
 
     useEffect(() => {
         if (onPageChange) {
@@ -107,9 +109,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                 handleAnswer={handleAnswer}
                 handleComment={handleComment}
                 handleNewQuestion={handleNewQuestion}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
                 handleProfile={handleProfile}
                 account={account}
             />
@@ -128,9 +127,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                 <TagPage
                     clickTag={clickTag}
                     handleNewQuestion={handleNewQuestion}
-                    handleSignup={handleSignup}
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     account={account}
                 />
             );
@@ -142,9 +138,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                 <ProfilePage
                     username={profileUser}
                     handleAnswer={handleAnswer}
-                    handleSignup={handleSignup}
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     account={account}
                 />
             );
@@ -158,9 +151,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                     handleNewQuestion={handleNewQuestion}
                     handleNewAnswer={handleNewAnswer}
                     handleNewComment={handleNewComment}
-                    handleSignup={handleSignup}
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     handleProfile={handleProfile}
                     account={account}
                 />
@@ -175,9 +165,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                     handleNewQuestion={handleNewQuestion}
                     handleNewAnswer={handleNewAnswer}
                     handleNewComment={handleNewComment}
-                    handleSignup={handleSignup}
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     handleProfile={handleProfile}
                     account={account}
                 />
@@ -190,9 +177,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
             content = 
                 <NewQuestion 
                     handleQuestions={handleQuestions} 
-                    handleSignup={handleSignup}
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     account={account}
                 />;
             break;
@@ -203,9 +187,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                 <NewAnswer 
                     qid={qid} 
                     handleAnswer={handleAnswer}
-                    handleSignup={handleSignup} 
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     account={account}
                 />;
             break;
@@ -217,9 +198,6 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                     qid={qid} 
                     aid = {aid}
                     handleComment={handleComment}
-                    handleSignup={handleSignup} 
-                    handleLogin={handleLogin}
-                    handleLogout={handleLogout}
                     account={account}
                 />;
             break;

@@ -5,13 +5,12 @@ import AnswerHeader from "./header";
 import Comment from "./comment"
 import "./index.css";
 import QuestionBody from "./questionBody";
-import AuthButtons from "../baseComponents/authButtons";
 import { getQuestionById } from "../../../services/questionService";
 import { acceptAnswer } from "../../../services/answerService";
 //import { getCommentById } from "../../../services/commentService";
 
 // Component for the Answers page
-const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment, handleSignup, handleLogin, handleLogout, handleProfile, account }) => {
+const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment, handleProfile, account }) => {
     const [question, setQuestion] = useState({});
     useEffect(() => {
         const fetchData = async () => {
@@ -51,12 +50,6 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
 
     return (
         <>
-            <AuthButtons
-                account={account}
-                handleSignup={handleSignup}
-                handleLogin={handleLogin}
-                handleLogout={handleLogout}
-            />
             <AnswerHeader
                 comCount={
                     question && question.comments && question.comments.length
