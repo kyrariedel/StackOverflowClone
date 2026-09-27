@@ -1,9 +1,9 @@
-import { handleHyperlink } from "../../../../tool";
 import Avatar from "../../baseComponents/avatar";
+import MarkdownView from "../../baseComponents/markdown/MarkdownView";
 import "./index.css";
 
 // Component for the Answer Page
-const Answer = ({ text, ansBy, meta, accepted, canAccept, onAccept, handleProfile }) => {
+const Answer = ({ text, ansBy, meta, accepted, canAccept, onAccept, handleProfile, tags }) => {
     return (
         <div className={`answer right_padding ${accepted ? "answer_accepted" : ""}`}>
             <div className="answer_accept">
@@ -20,7 +20,7 @@ const Answer = ({ text, ansBy, meta, accepted, canAccept, onAccept, handleProfil
                 )}
             </div>
             <div id="answerText" className="answerText">
-                {handleHyperlink(text)}
+                <MarkdownView text={text} tags={tags} />
             </div>
             <div className="answerAuthor">
                 <button

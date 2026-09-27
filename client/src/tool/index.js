@@ -1,3 +1,5 @@
+import { hasInvalidHyperlink } from "./markdown";
+
 const months = [
     "Jan",
     "Feb",
@@ -53,34 +55,7 @@ const getDateHelper = (date) => {
     return day;
 };
 
-const validateHyperlink = (text) => {
-    const hyperlinkPattern = /\[([^\]]*)\]\(([^)]*)\)/g;
-    let isValid = true;
-
-    // Find all matches for hyperlinks in the text
-    const matches = [...text.matchAll(hyperlinkPattern)];
-
-    // If there are no matches, it's valid
-    if (matches.length === 0) {
-        return isValid;
-    }
-
-    // Check each match to see if the URL starts with https://
-
-    for (const match of matches) {
-        if (
-            !match[1].length ||
-            !match[2].length ||
-            !match[2].startsWith("https://") ||
-            !match[2].slice(8).length
-        ) {
-            isValid = false;
-            break; // No need to check further, one invalid URL is enough to return false
-        }
-    }
-
-    return isValid;
-};
+const validateHyperlink = (text) => !hasInvalidHyperlink(text);
 
 const handleHyperlink = (text = "") => {
     const source = text == null ? "" : String(text);

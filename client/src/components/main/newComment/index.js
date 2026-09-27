@@ -1,11 +1,11 @@
 import "./index.css";
 import { useState } from "react";
 import Form from "../baseComponents/form";
-import Textarea from "../baseComponents/textarea";
+import MarkdownEditor from "../baseComponents/markdown/MarkdownEditor";
 import { validateHyperlink } from "../../../tool";
 import { addComment } from "../../../services/commentService";
 
-const NewComment = ({ qid, aid, handleComment, account }) => {
+const NewComment = ({ qid, aid, handleComment, account, tags }) => {
     const [text, setText] = useState("");
     const [textErr, setTextErr] = useState("");
     const postComment = async () => {
@@ -40,12 +40,13 @@ const NewComment = ({ qid, aid, handleComment, account }) => {
     return (
         <div>
             <Form>
-                <Textarea
+                <MarkdownEditor
                     title={"Comment Text"}
                     id={"commentTextInput"}
                     val={text}
                     setState={setText}
                     err={textErr}
+                    tags={tags}
                 />
                 <div className="btn_indicator_container">
                     <button

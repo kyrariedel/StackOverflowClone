@@ -1,11 +1,11 @@
 import "./index.css";
 import { useState } from "react";
 import Form from "../baseComponents/form";
-import Textarea from "../baseComponents/textarea";
+import MarkdownEditor from "../baseComponents/markdown/MarkdownEditor";
 import { validateHyperlink } from "../../../tool";
 import { addAnswer } from "../../../services/answerService";
 
-const NewAnswer = ({ qid, handleAnswer, account }) => {
+const NewAnswer = ({ qid, handleAnswer, account, tags }) => {
     const [text, setText] = useState("");
     const [textErr, setTextErr] = useState("");
     const postAnswer = async () => {
@@ -40,12 +40,13 @@ const NewAnswer = ({ qid, handleAnswer, account }) => {
     return (
         <div>
             <Form>
-                <Textarea
+                <MarkdownEditor
                     title={"Answer Text"}
                     id={"answerTextInput"}
                     val={text}
                     setState={setText}
                     err={textErr}
+                    tags={tags}
                 />
                 <div className="btn_indicator_container">
                     <button

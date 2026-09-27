@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Form from "../baseComponents/form";
 import Input from "../baseComponents/input";
-import Textarea from "../baseComponents/textarea";
+import MarkdownEditor from "../baseComponents/markdown/MarkdownEditor";
 import "./index.css";
 import { validateHyperlink } from "../../../tool";
 
@@ -83,13 +83,14 @@ const NewQuestion = ({ handleQuestions, account }) => {
                     setState={setTitle}
                     err={titleErr}
                 />
-                <Textarea
+                <MarkdownEditor
                     title={"Question Text"}
                     hint={"Add details"}
                     id={"formTextInput"}
                     val={text}
                     setState={setText}
                     err={textErr}
+                    tags={tag.split(/\s+/)}
                 />
                 <Input
                     title={"Tags"}

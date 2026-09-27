@@ -10,6 +10,7 @@ import NewComment from "./newComment";
 import Signup from "./account/signup";
 import Login from "./account/login";
 import ProfilePage from "./profile";
+import { tagNames } from "../../tool/markdown";
 
 const Main = ({ search = "", title, setQuestionPage, account, setAccount, profileTick, authAction, onPageChange }) => {
     const [page, setPage] = useState("home");
@@ -17,6 +18,7 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
     const [qid, setQid] = useState("");
     const [aid, setAid] = useState("");
     const [profileUser, setProfileUser] = useState("");
+    const [postTags, setPostTags] = useState([]);
     let selected = "";
     let content = null;
 
@@ -55,12 +57,14 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
         setPage("newQuestion");
     };
 
-    const handleNewAnswer = () => {
+    const handleNewAnswer = (tags = []) => {
+        setPostTags(tagNames(tags));
         setPage("newAnswer");
     };
 
-    const handleNewComment = (aid = null) => {
+    const handleNewComment = (aid = null, tags = []) => {
         setAid(aid);
+        setPostTags(tagNames(tags));
         setPage("newComment");
     };
 
@@ -188,6 +192,7 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                     qid={qid} 
                     handleAnswer={handleAnswer}
                     account={account}
+                    tags={postTags}
                 />;
             break;
         }
@@ -199,6 +204,7 @@ const Main = ({ search = "", title, setQuestionPage, account, setAccount, profil
                     aid = {aid}
                     handleComment={handleComment}
                     account={account}
+                    tags={postTags}
                 />;
             break;
         }

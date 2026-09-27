@@ -1,13 +1,13 @@
-import { handleHyperlink } from "../../../../tool";
 import Avatar from "../../baseComponents/avatar";
+import MarkdownView from "../../baseComponents/markdown/MarkdownView";
 import "./index.css";
 
 // Component for the Comment Page
-const Comment = ({ text, comBy, meta }) => {
+const Comment = ({ text, comBy, meta, tags }) => {
     return (
         <div className="comment right_padding">
             <div id="commentText" className="commentText">
-                {handleHyperlink(text)}
+                <MarkdownView text={text} tags={tags} />
             </div>
             <div className="commentAuthor">
                 <div className="comment_author">

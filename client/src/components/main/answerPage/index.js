@@ -75,12 +75,13 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                 askby={question && question.asked_by}
                 meta={question && getMetaData(new Date(question.ask_date_time))}
                 handleProfile={handleProfile}
+                tags={question && question.tags}
             />
             <button
                 className="replyBtn"
                 onClick={() => {
                     if (account) {
-                        handleNewComment();
+                        handleNewComment(null, question.tags);
                     } else {
                         alert("Please log in to reply to a question");
                     }
@@ -96,6 +97,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                         text={c.text}
                         comBy={c.com_by}
                         meta={getMetaData(new Date(c.com_date_time))}
+                        tags={question.tags}
                     />
                 ))}
 
@@ -109,6 +111,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                             canAccept={isAuthor}
                             onAccept={() => handleAccept(a._id)}
                             handleProfile={handleProfile}
+                            tags={question.tags}
                         />
                         {a.comments && a.comments.length > 0 && (
                             <div>
@@ -118,6 +121,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                                         text = {comment.text}
                                         comBy = {comment.com_by}
                                         meta = {getMetaData(new Date(comment.com_date_time))}
+                                        tags={question.tags}
                                     />
                                 ))}
                             </div>
@@ -126,7 +130,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                             className="replyBtn"
                             onClick={() => {
                                 if (account) {
-                                    handleNewComment(a._id);
+                                    handleNewComment(a._id, question.tags);
                                 } else {
                                     alert("Please log in to reply to an answer");
                                 }
@@ -139,7 +143,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                 className="bluebtn ansButton"
                 onClick={() => {
                     if (account) {
-                        handleNewAnswer();
+                        handleNewAnswer(question.tags);
                     } else {
                         alert("Please log in to answer a question");
                     }

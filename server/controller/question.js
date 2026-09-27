@@ -27,6 +27,7 @@ const getQuestionById = async (req, res) => {
     ).populate([
         {path: "answers", populate: {path: "comments"}},
         {path: "comments"},
+        {path: "tags"},
     ]);
     
     res.send(question);

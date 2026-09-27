@@ -152,6 +152,7 @@ describe('GET /getQuestionById/:qid', () => {
     expect(populate).toHaveBeenCalledWith([
       { path: "answers", populate: { path: "comments" } },
       { path: "comments" },
+      { path: "tags" },
     ]);
   });
 });
