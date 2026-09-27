@@ -7,6 +7,9 @@ describe("header profile", () => {
         cy.get("#formAccountPasswordInput").type("123");
         cy.contains("button", "Login").click();
 
+        cy.get("#signupbtn").should("not.exist");
+        cy.get("#loginbtn").should("not.exist");
+        cy.get("#logoutbtn").should("be.visible");
         cy.get("#header_profile")
             .should("be.visible")
             .and("have.css", "background-color", "rgba(0, 0, 0, 0)")

@@ -1,7 +1,7 @@
 .main {
     display: flex;
     flex-direction: row;
-    height: 90%;
+    height: calc(100% - 56px);
 }
 
 .right_main {
@@ -18,19 +18,32 @@
     padding: 2% 0 2% 2%;
 }
 
+.bold_title,
+.postTitle,
+.answer_question_title {
+    font-family: "Stack Sans Headline", sans-serif;
+    font-optical-sizing: auto;
+}
+
 .bold_title {
     font-size: 24px;
-    font-weight: 800;
+    font-weight: 700;
     line-height: 40px;
 }
 
 .bluebtn {
     background: #3090e2;
     color: #ffffff;
-    border: #000000 1px solid;
+    border: none;
     font-size: 20px;
     padding: 10px 10px 10px 10px;
     margin-right: 5%;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.bluebtn:hover {
+    background: #2476c2;
 }
 
 .btn_indicator_container {
@@ -45,8 +58,12 @@
     color: #ffffff;
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+}
+
+.form_postBtn:hover {
+    background: #2476c2;
 }
 
 .mandatory_indicator {
@@ -59,16 +76,46 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    height: 10%;
     width: 100%;
-    background: #dddddd;
+    background: #ffffff;
+    padding: 8px 12px 0 0;
+    box-sizing: border-box;
 }
 
 .bluebtn_login {
+    font-size: 15px;
+    padding: 8px 14px;
+    margin-right: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.bluebtn_login.signupbtn {
     background: #3090e2;
     color: #ffffff;
-    border: #000000 1px solid;
-    font-size: 15px;
-    padding: 8px 8px 8px 8px;
-    margin-right: 0.8%;
+    border: none;
+}
+
+.bluebtn_login.signupbtn:hover {
+    background: #2476c2;
+}
+
+.bluebtn_login.loginbtn {
+    background: #ffffff;
+    color: #3090e2;
+    border: 1px solid #3090e2;
+}
+
+.bluebtn_login.loginbtn:hover {
+    background: #e7f1fb;
+}
+
+.bluebtn_login.logoutbtn {
+    background: #ffffff;
+    color: #333333;
+    border: 1px solid #cccccc;
+}
+
+.bluebtn_login.logoutbtn:hover {
+    background: #ececec;
 }

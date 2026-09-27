@@ -5,6 +5,7 @@ import AnswerHeader from "./header";
 import Comment from "./comment"
 import "./index.css";
 import QuestionBody from "./questionBody";
+import AuthButtons from "../baseComponents/authButtons";
 import { getQuestionById } from "../../../services/questionService";
 import { acceptAnswer } from "../../../services/answerService";
 //import { getCommentById } from "../../../services/commentService";
@@ -50,36 +51,12 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
 
     return (
         <>
-            <div id="login" className="header_button">
-                <button
-                    className="bluebtn_login"
-                    id="signupbtn"
-                    onClick={() => {
-                        handleSignup();
-                    }}> 
-                        Signup
-                </button>
-                <button
-                    className="bluebtn_login"
-                    id="loginbtn"
-                    onClick={() => {
-                        if (account) {
-                            alert(`You are logged in as ${account}`)
-                        } else {
-                            handleLogin();
-                        }
-                    }}> 
-                        Login
-                </button>
-                <button
-                    className="bluebtn_login"
-                    id="logoutbtn"
-                    onClick={() => {
-                        handleLogout();
-                    }}> 
-                        Logout
-                </button>
-            </div>
+            <AuthButtons
+                account={account}
+                handleSignup={handleSignup}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+            />
             <AnswerHeader
                 comCount={
                     question && question.comments && question.comments.length

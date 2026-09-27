@@ -41,24 +41,29 @@ const Header = ({ search, setQuestionPage, account, onProfile, profileTick }) =>
 
     return (
         <div id="header" className="header">
-            <div></div>
             <div className="title">Stack Overflow</div>
             <div className="header_search">
-                <input
-                    id="searchBar"
-                    placeholder="Search ..."
-                    type="text"
-                    value={val}
-                    onChange={(e) => {
-                        setVal(e.target.value);
-                    }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            e.preventDefault();
-                            setQuestionPage(e.target.value, "Search Results");
-                        }
-                    }}
-                />
+                <label className="search_box">
+                    <svg className="search_icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="2" />
+                        <path d="M16.5 16.5L21 21" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                    <input
+                        id="searchBar"
+                        placeholder="Search..."
+                        type="search"
+                        value={val}
+                        onChange={(e) => {
+                            setVal(e.target.value);
+                        }}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.preventDefault();
+                                setQuestionPage(e.target.value, "Search Results");
+                            }
+                        }}
+                    />
+                </label>
                 {account && (
                     <button
                         id="header_profile"

@@ -1,5 +1,10 @@
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Stack Sans Text", sans-serif;
+    font-optical-sizing: auto;
+}
+
+button {
+    border-radius: 8px;
 }
 
 html {

@@ -1,5 +1,6 @@
 import "./index.css";
 import OrderButton from "./orderButton";
+import AuthButtons from "../../baseComponents/authButtons";
 
 const QuestionHeader = ({
     title_text,
@@ -13,36 +14,12 @@ const QuestionHeader = ({
 }) => {
     return (
         <div>
-            <div id="login" className="header_button">
-                <button
-                    className="bluebtn_login"
-                    id="signupbtn"
-                    onClick={() => {
-                        handleSignup();
-                    }}> 
-                        Signup
-                </button>
-                <button
-                    className="bluebtn_login"
-                    id="loginbtn"
-                    onClick={() => {
-                        if (account) {
-                            alert(`You are logged in as ${account}`)
-                        } else {
-                            handleLogin();
-                        }
-                    }}> 
-                        Login
-                </button>
-                <button
-                    className="bluebtn_login"
-                    id="logoutbtn"
-                    onClick={() => {
-                        handleLogout();
-                    }}> 
-                        Logout
-                </button>
-            </div>
+            <AuthButtons
+                account={account}
+                handleSignup={handleSignup}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+            />
             <div className="header_buffer">
                 &nbsp;
             </div>

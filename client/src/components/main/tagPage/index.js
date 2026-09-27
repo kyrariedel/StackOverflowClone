@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import Tag from "./tag";
 import { getTagsWithQuestionNumber } from "../../../services/tagService";
+import AuthButtons from "../baseComponents/authButtons";
 
 const TagPage = ({ clickTag, handleNewQuestion, handleSignup, handleLogin, handleLogout, account }) => {
     const [tlist, setTlist] = useState([]);
@@ -15,36 +16,12 @@ const TagPage = ({ clickTag, handleNewQuestion, handleSignup, handleLogin, handl
     }, []);
     return (
         <>
-            <div id="login" className="header_button">
-                <button
-                    className="bluebtn_login"
-                    id="signupbtn"
-                    onClick={() => {
-                        handleSignup();
-                    }}> 
-                        Signup
-                </button>
-                <button
-                    className="bluebtn_login"
-                    id="loginbtn"
-                    onClick={() => {
-                        if (account) {
-                            alert(`You are logged in as ${account}`)
-                        } else {
-                            handleLogin();
-                        }
-                    }}> 
-                        Login
-                </button>
-                <button
-                    className="bluebtn_login"
-                    id="logoutbtn"
-                    onClick={() => {
-                        handleLogout();
-                    }}> 
-                        Logout
-                </button>
-            </div>
+            <AuthButtons
+                account={account}
+                handleSignup={handleSignup}
+                handleLogin={handleLogin}
+                handleLogout={handleLogout}
+            />
             <div className="space_between right_padding">
                 <div className="bold_title">{tlist.length} Tags</div>
                 <div className="bold_title">All Tags</div>

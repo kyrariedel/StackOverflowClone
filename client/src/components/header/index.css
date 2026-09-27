@@ -1,10 +1,13 @@
 .header {
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    height: 10%;
+    justify-content: space-between;
+    height: 56px;
     width: 100%;
-    background: #dddddd;
+    box-sizing: border-box;
+    padding: 0 24px;
+    background: #ffffff;
+    border-bottom: 1px solid #e4e4e4;
 }
 
 .login_btn_group {
@@ -20,6 +23,38 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    flex: 1;
+    max-width: 640px;
+    margin: 0 24px;
+}
+
+.search_box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    height: 40px;
+    padding: 0 14px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.search_icon {
+    width: 18px;
+    height: 18px;
+    color: #6a6a6a;
+    flex: 0 0 auto;
+}
+
+.search_box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font: inherit;
+    font-size: 16px;
+    width: 100%;
+    color: inherit;
 }
 
 .header_profile {
@@ -37,19 +72,27 @@
 }
 
 .header_profile:hover {
-    background: #c8c8c8;
+    background: #ececec;
 }
 
 .title {
-    font-size: 32px;
-    font-weight: 800;
+    font-family: "Stack Sans Notch", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 22px;
+    font-weight: 650;
+    white-space: nowrap;
 }
 
 .bluebtn {
     background: #3090e2;
     color: #ffffff;
-    border: #000000 1px solid;
+    border: none;
     font-size: 20px;
-    padding: 10px 10px 10px 10px;
+    padding: 10px;
     margin-right: 5%;
+    border-radius: 8px;
 }
+/* 
+.searchBar {
+
+} */
