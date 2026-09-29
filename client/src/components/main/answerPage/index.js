@@ -5,6 +5,7 @@ import AnswerHeader from "./header";
 import Comment from "./comment"
 import "./index.css";
 import QuestionBody from "./questionBody";
+import Timeline from "./timeline";
 import { getQuestionById } from "../../../services/questionService";
 import { acceptAnswer } from "../../../services/answerService";
 //import { getCommentById } from "../../../services/commentService";
@@ -12,7 +13,9 @@ import { acceptAnswer } from "../../../services/answerService";
 // Component for the Answers page
 const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment, handleProfile, account }) => {
     const [question, setQuestion] = useState({});
+    const [timelineId, setTimelineId] = useState(null);
     useEffect(() => {
+        setTimelineId(null);
         const fetchData = async () => {
             let res = await getQuestionById(qid);
             setQuestion(res || {});
@@ -46,29 +49,8 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
         return aAccepted ? -1 : 1;
     });
     const isAuthor = Boolean(account) && account === question.asked_by;
-
-
-    return (
+    const thread = (
         <>
-            <AnswerHeader
-                comCount={
-                    question && question.comments && question.comments.length
-                }
-                ansCount={
-                    question && question.answers && question.answers.length
-                }
-                title={question && question.title}
-                handleNewQuestion={handleNewQuestion}
-                account={account}
-                qid={qid}
-                voteup={question && question.upvote ? question.upvote.length : 0}
-                votedown={question && question.downvote ? question.downvote.length : 0}
-                onVoted={applyVote}
-                views={question && question.views}
-                text={question && question.text}
-                askby={question && question.asked_by}
-                meta={question && getMetaData(new Date(question.ask_date_time))}
-            />
             <QuestionBody
                 views={question && question.views}
                 text={question && question.text}
@@ -137,7 +119,7 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                             }}
                         >
                             Add a Comment
-                        </button> 
+                        </button>
                         </div> ))}
             <button
                 className="bluebtn ansButton"
@@ -151,6 +133,47 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
             >
                 Answer Question
             </button>
+        </>
+    );
+
+    return (
+        <>
+            <AnswerHeader
+                comCount={
+                    question && question.comments && question.comments.length
+                }
+                ansCount={
+                    question && question.answers && question.answers.length
+                }
+                title={question && question.title}
+                handleNewQuestion={handleNewQuestion}
+                account={account}
+                qid={qid}
+                voteup={question && question.upvote ? question.upvote.length : 0}
+                votedown={question && question.downvote ? question.downvote.length : 0}
+                onVoted={applyVote}
+                views={question && question.views}
+                text={question && question.text}
+                askby={question && question.asked_by}
+                meta={question && getMetaData(new Date(question.ask_date_time))}
+                showTimeline={timelineId === "question"}
+                onTimeline={() => setTimelineId((current) => current === "question" ? null : "question")}
+            />
+            {timelineId === "question" && (
+                <Timeline
+                    question={question}
+                    handleProfile={handleProfile}
+                    onOpenAnswer={(answerId) => setTimelineId(answerId)}
+                />
+            )}
+            {timelineId && timelineId !== "question" && (
+                <Timeline
+                    question={question}
+                    answer={(question.answers || []).find((answer) => String(answer._id) === String(timelineId))}
+                    handleProfile={handleProfile}
+                />
+            )}
+            {timelineId ? null : thread}
         </>
     );
 };

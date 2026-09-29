@@ -1,0 +1,64 @@
+.timeline_title {
+    font-family: "Stack Sans Headline", sans-serif;
+    font-size: 22px;
+    margin: 8px 0;
+}
+
+.timeline_count {
+    color: #6a6a6a;
+    margin-bottom: 8px;
+}
+
+.timeline table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.timeline th,
+.timeline td {
+    border-bottom: 1px solid #e4e4e4;
+    text-align: left;
+    padding: 8px 10px;
+    vertical-align: top;
+}
+
+.timeline th {
+    color: #6a6a6a;
+    font-weight: 600;
+}
+
+.timeline_toggle {
+    display: block;
+    margin-top: 4px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #3090e2;
+    cursor: pointer;
+    font: inherit;
+}
+
+.timeline_user,
+.timeline_link {
+    border: none;
+    background: transparent;
+    padding: 0;
+    color: #3090e2;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: none;
+}
+
+.timeline_link {
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.timeline_link:hover,
+.timeline_user:hover {
+    text-decoration: underline;
+}
+
+.timeline_comment {
+    white-space: pre-wrap;
+}
