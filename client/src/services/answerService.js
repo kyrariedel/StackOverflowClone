@@ -10,6 +10,18 @@ const addAnswer = async (qid, ans) => {
     return res.data;
 };
 
+const upvoteAnswer = async (account, aid) => {
+    const res = await api.get(`${ANSWER_API_URL}/upvoteAnswer?username=${account}&aid=${aid}`);
+
+    return res.data;
+};
+
+const downvoteAnswer = async (account, aid) => {
+    const res = await api.get(`${ANSWER_API_URL}/downvoteAnswer?username=${account}&aid=${aid}`);
+
+    return res.data;
+};
+
 const acceptAnswer = async (qid, aid, username) => {
     const res = await api.post(`${ANSWER_API_URL}/acceptAnswer`, {
         qid,
@@ -20,4 +32,4 @@ const acceptAnswer = async (qid, aid, username) => {
     return res.data;
 };
 
-export { addAnswer, acceptAnswer };
+export { addAnswer, upvoteAnswer, downvoteAnswer, acceptAnswer };

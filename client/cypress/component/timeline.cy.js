@@ -73,4 +73,47 @@ describe("question timeline", () => {
         cy.get("#timeline").should("not.exist");
         cy.contains("Answer Question");
     });
+
+    it("opens an answer timeline that only records the answer", () => {
+        cy.intercept("GET", "**/question/getQuestionById/*", {
+            statusCode: 200,
+            body: {
+                ...question,
+                comments: [],
+                answers: [
+                    {
+                        _id: "a-only",
+                        text: "Nothing else happened.",
+                        ans_by: "olivier",
+                        ans_date_time: "2024-01-02T12:00:00.000Z",
+                        upvote: [],
+                        downvote: [],
+                        comments: [],
+                    },
+                ],
+            },
+        });
+
+        cy.mount(
+            <AnswerPage
+                qid="q1"
+                handleNewQuestion={noop}
+                handleNewAnswer={noop}
+                handleNewComment={noop}
+                account=""
+            />
+        );
+
+        cy.contains(".answer", "Nothing else happened.").find(".upvote").should("be.visible");
+        cy.contains(".answer", "Nothing else happened.").find(".downvote").should("be.visible");
+        cy.contains(".answer", "Nothing else happened.").find(".number").should("have.text", "0");
+        cy.contains(".answer", "Nothing else happened.").find(".timeline_btn").click();
+        cy.get("#timeline").should("contain", "Timeline for answer by olivier");
+        cy.get("#timeline").should("contain", "1 events");
+        cy.get("#timeline tbody tr").should("have.length", 1);
+        cy.get("#timeline tbody tr").eq(0).should("contain", "history").and("contain", "answered").and("contain", "olivier");
+        cy.get("#timeline").should("not.contain", "asked");
+        cy.get("#timeline_btn").click();
+        cy.get("#timeline").should("contain", "Timeline for How do I pin an answer?");
+    });
 });

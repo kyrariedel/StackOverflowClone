@@ -19,6 +19,28 @@ const addAnswer = async (req, res) => {
 
 };
 
+const upvoteAnswer = async (req, res) => {
+    const { aid, username } = req.query;
+    await Answer.findOneAndUpdate({ _id: aid }, { $addToSet: { upvote: username } });
+    const answer = await Answer.findOneAndUpdate(
+        { _id: aid },
+        { $pull: { downvote: username } },
+        { new: true }
+    );
+    res.json(answer);
+};
+
+const downvoteAnswer = async (req, res) => {
+    const { aid, username } = req.query;
+    await Answer.findOneAndUpdate({ _id: aid }, { $addToSet: { downvote: username } });
+    const answer = await Answer.findOneAndUpdate(
+        { _id: aid },
+        { $pull: { upvote: username } },
+        { new: true }
+    );
+    res.json(answer);
+};
+
 const acceptAnswer = async (req, res) => {
     const { qid, aid, username } = req.body;
     const question = await Question.findById(qid);
@@ -47,6 +69,8 @@ const acceptAnswer = async (req, res) => {
 
 // add appropriate HTTP verbs and their endpoints to the router.
 router.post('/addAnswer', addAnswer);
+router.get('/upvoteAnswer', upvoteAnswer);
+router.get('/downvoteAnswer', downvoteAnswer);
 router.post('/acceptAnswer', acceptAnswer);
 
 module.exports = router;

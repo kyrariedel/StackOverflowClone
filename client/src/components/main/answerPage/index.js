@@ -7,7 +7,8 @@ import "./index.css";
 import QuestionBody from "./questionBody";
 import Timeline from "./timeline";
 import { getQuestionById } from "../../../services/questionService";
-import { acceptAnswer } from "../../../services/answerService";
+import { acceptAnswer, downvoteAnswer, upvoteAnswer } from "../../../services/answerService";
+import { upvoteComment } from "../../../services/commentService";
 //import { getCommentById } from "../../../services/commentService";
 
 // Component for the Answers page
@@ -29,6 +30,61 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
             upvote: updated.upvote || [],
             downvote: updated.downvote || [],
         }));
+    };
+
+    const applyAnswerVote = (aid, updated) => {
+        if (!updated || !updated._id) {
+            return;
+        }
+        setQuestion((current) => ({
+            ...current,
+            answers: (current.answers || []).map((answer) =>
+                String(answer._id) === String(aid)
+                    ? {
+                        ...answer,
+                        upvote: updated.upvote || [],
+                        downvote: updated.downvote || [],
+                    }
+                    : answer
+            ),
+        }));
+    };
+
+    const applyCommentVote = (cid, updated) => {
+        if (!updated || !updated._id) {
+            return;
+        }
+        const patch = (comment) =>
+            String(comment._id) === String(cid)
+                ? { ...comment, upvote: updated.upvote || [] }
+                : comment;
+        setQuestion((current) => ({
+            ...current,
+            comments: (current.comments || []).map(patch),
+            answers: (current.answers || []).map((answer) => ({
+                ...answer,
+                comments: (answer.comments || []).map(patch),
+            })),
+        }));
+    };
+
+    const voteOnAnswer = async (aid, direction) => {
+        if (!account) {
+            alert("Please log in to vote");
+            return;
+        }
+        const updated = direction === "down"
+            ? await downvoteAnswer(account, aid)
+            : await upvoteAnswer(account, aid);
+        applyAnswerVote(aid, updated);
+    };
+
+    const voteOnComment = async (cid) => {
+        if (!account) {
+            alert("Please log in to vote");
+            return;
+        }
+        applyCommentVote(cid, await upvoteComment(account, cid));
     };
 
     const handleAccept = async (aid) => {
@@ -80,6 +136,8 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                         comBy={c.com_by}
                         meta={getMetaData(new Date(c.com_date_time))}
                         tags={question.tags}
+                        score={c.upvote ? c.upvote.length : 0}
+                        onUpvote={() => voteOnComment(c._id)}
                     />
                 ))}
 
@@ -94,6 +152,11 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                             onAccept={() => handleAccept(a._id)}
                             handleProfile={handleProfile}
                             tags={question.tags}
+                            voteup={a.upvote ? a.upvote.length : 0}
+                            votedown={a.downvote ? a.downvote.length : 0}
+                            onUpvote={() => voteOnAnswer(a._id, "up")}
+                            onDownvote={() => voteOnAnswer(a._id, "down")}
+                            onTimeline={() => setTimelineId(a._id)}
                         />
                         {a.comments && a.comments.length > 0 && (
                             <div>
@@ -104,6 +167,8 @@ const AnswerPage = ({ qid, handleNewQuestion, handleNewAnswer, handleNewComment,
                                         comBy = {comment.com_by}
                                         meta = {getMetaData(new Date(comment.com_date_time))}
                                         tags={question.tags}
+                                        score={comment.upvote ? comment.upvote.length : 0}
+                                        onUpvote={() => voteOnComment(comment._id)}
                                     />
                                 ))}
                             </div>

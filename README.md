@@ -46,7 +46,7 @@ Guests can browse questions, tags, and a question’s answers and comments. Aski
 | Question page | Loads one question and increments its view count. Shows the body (with links turned into anchors), answers, comments on the question, and comments stored on each answer. |
 | Answers | Logged-in users post an answer. Same link check as questions. New answers are inserted at the front of the question’s answer list. |
 | Comments | Logged-in users comment on the question or on an answer. |
-| Votes | Logged-in users up-vote or down-vote a question. The score is up-votes minus down-votes. A username is stored on only one of the two lists. |
+| Votes | Logged-in users up-vote or down-vote a question or an answer. The score is up-votes minus down-votes. A username is stored on only one of the two lists. Comments show an up-vote and a score equal to the up-vote count. |
 | Tags | Page lists each tag and how many questions use it. |
 | Accounts | Signup stores username, password, and name. Login sends username and password as query parameters and keeps the returned username in client state. Logout clears that state. Sidebar shows `Welcome` plus the username. |
 
@@ -64,12 +64,15 @@ Base URL `http://localhost:8000`. CORS allows `http://localhost:3000` with crede
 | GET | `/question/upvoteQuestion?username=&qid=` | Add username to up-votes, remove from down-votes |
 | GET | `/question/downvoteQuestion?username=&qid=` | Add username to down-votes, remove from up-votes |
 | POST | `/answer/addAnswer` | Create an answer and attach it to `qid` |
+| GET | `/answer/upvoteAnswer?username=&aid=` | Add username to the answer’s up-votes, remove from down-votes |
+| GET | `/answer/downvoteAnswer?username=&aid=` | Add username to the answer’s down-votes, remove from up-votes |
 | POST | `/comment/addComment` | Create a comment on `qid`, or on `aid` when `aid` is set |
+| GET | `/comment/upvoteComment?username=&cid=` | Add username to the comment’s up-votes |
 | GET | `/tag/getTagsWithQuestionNumber` | Tag names with question counts |
 | POST | `/account/addAccount` | Create an account |
 | GET | `/account/authenticateAccount?username=&password=` | Return the username when both username and password match |
 
-There are no answer-vote routes. `client/src/services/commentService.js` also calls `GET /comment/getQuestionById/:id`, which is not implemented. Account fields `role`, `votedQuestions`, and `votedAnswers` are on the schema and are not used by these routes.
+`client/src/services/commentService.js` also calls `GET /comment/getQuestionById/:id`, which is not implemented. Account fields `role`, `votedQuestions`, and `votedAnswers` are on the schema and are not used by these routes.
 
 ## Tests
 

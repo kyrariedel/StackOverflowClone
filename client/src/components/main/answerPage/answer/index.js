@@ -1,12 +1,38 @@
+import { CaretDownOutlined, CaretUpOutlined, HistoryOutlined } from "@ant-design/icons";
 import Avatar from "../../baseComponents/avatar";
 import MarkdownView from "../../baseComponents/markdown/MarkdownView";
 import "./index.css";
 
 // Component for the Answer Page
-const Answer = ({ text, ansBy, meta, accepted, canAccept, onAccept, handleProfile, tags }) => {
+const Answer = ({ text, ansBy, meta, accepted, canAccept, onAccept, handleProfile, tags, voteup, votedown, onUpvote, onDownvote, onTimeline }) => {
     return (
         <div className={`answer right_padding ${accepted ? "answer_accepted" : ""}`}>
-            <div className="answer_accept">
+            <div className="voting">
+                <button
+                    className="upvote"
+                    aria-label="Upvote"
+                    onClick={onUpvote}
+                >
+                    <CaretUpOutlined />
+                </button>
+                <div className="number">
+                    {(Number(voteup) || 0) - (Number(votedown) || 0)}
+                </div>
+                <button
+                    className="downvote"
+                    aria-label="Downvote"
+                    onClick={onDownvote}
+                >
+                    <CaretDownOutlined />
+                </button>
+                <button
+                    type="button"
+                    className="timeline_btn"
+                    aria-label="Show timeline"
+                    onClick={onTimeline}
+                >
+                    <HistoryOutlined />
+                </button>
                 {canAccept && (
                     <button
                         className={`acceptBtn ${accepted ? "acceptBtn_on" : ""}`}

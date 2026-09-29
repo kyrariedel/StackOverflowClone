@@ -8,7 +8,10 @@ const router = express.Router();
 const addComment = async (req, res) => {
     const { qid, aid, com } = req.body;
     let content = com;
-    let c = await Comment.create(content);
+    let c = await Comment.create({
+        ...content,
+        upvote: content.upvote || [],
+    });
     
     // Check if the comment is for a question or an answer
     if (aid == null) {
@@ -30,6 +33,17 @@ const addComment = async (req, res) => {
     res.json(c);
 };
 
+const upvoteComment = async (req, res) => {
+    const { cid, username } = req.query;
+    const comment = await Comment.findOneAndUpdate(
+        { _id: cid },
+        { $addToSet: { upvote: username } },
+        { new: true }
+    );
+    res.json(comment);
+};
+
 // add appropriate HTTP verbs and their endpoints to the router.
 router.post('/addComment', addComment);
+router.get('/upvoteComment', upvoteComment);
 module.exports = router;

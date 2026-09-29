@@ -10,10 +10,16 @@ const addComment = async (qid, aid, com) => {
     return res.data;
 };
 
+const upvoteComment = async (account, cid) => {
+    const res = await api.get(`${COMMENT_API_URL}/upvoteComment?username=${account}&cid=${cid}`);
+
+    return res.data;
+};
+
 const getCommentById = async (id) => {
     const res = await api.get(`${COMMENT_API_URL}/getQuestionById/${id}`);
 
     return res.data;
 };
 
-export { addComment, getCommentById };
+export { addComment, upvoteComment, getCommentById };
